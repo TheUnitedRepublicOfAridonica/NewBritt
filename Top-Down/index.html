@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Top-Down City</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="viewport" aria-label="Minimalist top-down city map">
+      <div class="city-shell">
+        <div class="city-grid">
+          <section class="block left-block" aria-label="left city block">
+            <div class="building"><span class="roof-detail"></span></div>
+            <div class="building"><span class="roof-detail"></span></div>
+            <div class="building"><span class="roof-detail"></span></div>
+            <div class="building"><span class="roof-detail"></span></div>
+          </section>
+
+          <section class="block right-block" aria-label="right city block">
+            <div class="building"><span class="roof-detail"></span></div>
+            <div class="building"><span class="roof-detail"></span></div>
+            <div class="building"><span class="roof-detail"></span></div>
+            <div class="building"><span class="roof-detail"></span></div>
+          </section>
+
+          <section class="block lower-left" aria-label="lower left block"></section>
+          <section class="block lower-right" aria-label="lower right block"></section>
+        </div>
+
+        <div class="road road-horizontal" aria-hidden="true"></div>
+        <div class="road road-vertical" aria-hidden="true"></div>
+
+        <div class="tower" aria-label="Central tower">
+          <div class="tower-head">New Britt</div>
+          <div class="tower-top"></div>
+          <div class="tower-body">
+            <div class="floor">
+              <span style="--i:1"></span>
+              <span style="--i:2"></span>
+              <span style="--i:3"></span>
+              <span style="--i:4"></span>
+              <span style="--i:5"></span>
+            </div>
+            <div class="floor">
+              <span style="--i:6"></span>
+              <span style="--i:7"></span>
+              <span style="--i:8"></span>
+              <span style="--i:9"></span>
+              <span style="--i:10"></span>
+            </div>
+            <div class="floor">
+              <span style="--i:11"></span>
+              <span style="--i:12"></span>
+              <span style="--i:13"></span>
+              <span style="--i:14"></span>
+              <span style="--i:15"></span>
+            </div>
+          </div>
+          <div class="tower-base"></div>
+        </div>
+
+        <div class="mid-row" aria-hidden="true">
+          <div class="mini"></div>
+          <div class="mini"></div>
+          <div class="mini"></div>
+          <div class="mini"></div>
+        </div>
+
+        <div class="ground-strip" aria-hidden="true">
+          <div class="pillar"></div>
+          <div class="pillar"></div>
+          <div class="pillar"></div>
+          <div class="pillar"></div>
+          <div class="pillar"></div>
+          <div class="pillar"></div>
+          <div class="pillar"></div>
+          <div class="pillar"></div>
+          <div class="pillar"></div>
+          <div class="pillar"></div>
+          <div class="pillar"></div>
+        </div>
+      </div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
