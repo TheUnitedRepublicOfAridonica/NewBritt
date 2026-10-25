@@ -1,1 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Britt City</title>
+    <style>
+      :root {
+        --bg1: #040b1a;
+        --bg2: #0c1731;
+        --bg3: #1a2e52;
+        --sky-glow: #78d5ff;
+        --pixel-dark: #111d2c;
+        --pixel-mid: #1a2a3d;
+        --pixel-light: #2b4a65;
+        --window-on: #ffd86b;
+        --window-off: #1e2d3b;
+        --neon: #7ef7ff;
+        --neon-2: #7bb6ff;
+        --rose: #ff7b7b;
+        --gold: #ffdf7a;
+        --hot: #ff9b54;
+        --road: #0a0e16;
+      }
 
+      * { box-sizing: border-box; }
+
+      html, body {
+        margin: 0;
+        height: 100%;
+        font-family: "Segoe UI", Tahoma, sans-serif;
+        background:
+          radial-gradient(circle at 50% 18%, rgba(120, 213, 255, 0.4), transparent 20%),
+          radial-gradient(circle at 50% 25%, rgba(151, 109, 255, 0.18), transparent 30%),
+          linear-gradient(to bottom, var(--bg1) 0%, var(--bg2) 38%, var(--bg3) 72%, #040b14 100%);
+        overflow: hidden;
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+      }
+
+      .scene {
+        position: relative;
+        width: min(94vw, 1180px);
+        height: min(76vh, 780px);
+        border: 3px solid rgba(126, 215, 255, 0.3);
+        background:
+          linear-gradient(to bottom, rgba(17, 30, 45, 0.25), rgba(5, 9, 15, 0.9)),
+          repeating-linear-gradient(
+            0deg,
+            rgba(255,255,255,0.015) 0 2px,
+            transparent 2px 10px
+          );
+        box-shadow:
+          0 0 0 6px rgba(7, 12, 18, 0.4),
+          0 0 35px rgba(120, 213, 255, 0.2),
+          0 30px 90px rgba(0, 0, 0, 0.8);
+        image-rendering: pixelated;
+        overflow: hidden;
+      }
+
+      .scene::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(to bottom, rgba(255,255,255,0.08), transparent 20%, transparent 75%, rgba(0,0,0,0.35)),
+          radial-gradient(circle at 50% 0%, rgba(120, 213, 255, 0.18), transparent 32%);
+        pointer-events: none;
+      }
+
+      .scene::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at center, transparent 58%, rgba(0,0,0,0.46) 100%);
+        pointer-events: none;
+      }
+
+      .stars, .clouds, .city {
+        position: absolute;
+        inset: 0;
+      }
+
+      .stars {
+        background-image:
+          radial-gradient(circle, rgba(255,255,255,0.95) 0 1px, transparent 1.8px),
+          radial-gradient(circle, rgba(126, 200, 255, 0.9) 0 1.5px, transparent 2px),
+          radial-gradient(circle, rgba(255, 160, 90, 0.8) 0 1px, transparent 1.8px);
+        background-size: 180px 180px, 200px 200px, 220px 220px;
+        background-position: 0 0, 60px 110px, 140px 40px;
+        opacity: 0.9;
+        animation: twinkle 7s ease-in-out infinite alternate;
+      }
+
+      @keyframes twinkle {
+        0% { opacity: 0.45; }
+        50% { opacity: 0.8; }
+        100% { opacity: 0.68; }
+      }
+
+      .clouds {
+        background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.03) 100%);
+      }
+
+      .cloud {
+        position: absolute;
+        width: 220px;
+        height: 42px;
+        background: rgba(127, 207, 255, 0.1);
+        box-shadow:
+          35px 8px 0 rgba(127, 207, 255, 0.08),
+          78px 18px 0 rgba(127, 207, 255, 0.07),
+          130px 5px 0 rgba(127, 207, 255, 0.06);
+        border-radius: 12px;
+        filter: blur(1.2px);
+        animation: drift 28s linear infinite;
+      }
+
+      .cloud:nth-child(1) { top: 9%; left: -15%; animation-delay: -4s; }
+      .cloud:nth-child(2) { top: 18%; left: -18%; animation-delay: -16s; }
+      .cloud:nth-child(3) { top: 31%; left: -16%; animation-delay: -11s; }
+
+      @keyframes drift {
+        from { transform: translateX(0); }
+        to { transform: translateX(140vw); }
+      }
+
+      .city {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 58%;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 10px;
+        padding: 0 20px 0;
+      }
+
+      .building {
+        position: relative;
+        width: 78px;
+        background: linear-gradient(to right, var(--pixel-dark), var(--pixel-mid), var(--pixel-light));
+        border-left: 4px solid rgba(255,255,255,0.05);
+        border-right: 4px solid rgba(255,255,255,0.05);
+        box-shadow:
+          inset 0 0 0 4px rgba(0,0,0,0.18),
+          0 0 20px rgba(120, 213, 255, 0.08);
+        overflow: hidden;
+      }
+
+      .building::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, rgba(255,255,255,0.05) 0%, transparent 14%, transparent 86%, rgba(255,255,255,0.05) 100%),
+          repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,0.05) 0 4px,
+            transparent 4px 10px
+          );
+      }
+
+      .building .windows {
+        position: absolute;
+        inset: 12px 8px 12px 8px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+        z-index: 1;
+      }
+
+      .building .windows span {
+        display: block;
+        width: 100%;
+        height: 18px;
+        background: var(--window-off);
+        box-shadow: inset 0 0 0 2px rgba(0,0,0,0.18);
+        animation: pulse 2.8s infinite ease-in-out;
+        animation-delay: var(--d);
+      }
+
+      @keyframes pulse {
+        0%, 100% {
+          background: var(--window-off);
+          box-shadow: 0 0 0 rgba(255, 216, 107, 0), inset 0 0 0 2px rgba(0,0,0,0.18);
+        }
+        25%, 60% {
+          background: var(--window-on);
+          box-shadow: 0 0 12px rgba(255, 216, 107, 0.8), inset 0 0 0 2px rgba(0,0,0,0.1);
+        }
+      }
+
+      .b1 { height: 150px; }
+      .b2 { height: 210px; width: 94px; }
+      .b3 { height: 240px; }
+      .b4 { height: 300px; width: 110px; }
+      .b5 { height: 420px; width: 178px; }
+      .b6 { height: 280px; }
+      .b7 { height: 185px; }
+
+      .tower-wrap {
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-50%);
+        width: 270px;
+        height: 540px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        z-index: 5;
+      }
+
+      .tower {
+        position: relative;
+        width: 220px;
+        height: 100%;
+        background: linear-gradient(to bottom, #365d82 0%, #233d5f 14%, #13273d 42%, #0d1728 100%);
+        box-shadow:
+          inset 0 0 0 6px rgba(255,255,255,0.06),
+          inset 0 0 30px rgba(120, 213, 255, 0.12),
+          0 0 40px rgba(126, 247, 255, 0.2);
+        border-left: 6px solid rgba(255,255,255,0.08);
+        border-right: 6px solid rgba(255,255,255,0.08);
+        overflow: hidden;
+        clip-path: polygon(18% 0, 82% 0, 100% 100%, 0 100%);
+      }
+
+      .tower::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, rgba(255,255,255,0.08) 0%, transparent 12%, transparent 88%, rgba(255,255,255,0.08) 100%),
+          repeating-linear-gradient(
+            0deg,
+            rgba(255,255,255,0.06) 0 3px,
+            transparent 3px 12px
+          );
+      }
+
+      .tower .spire {
+        position: absolute;
+        left: 50%;
+        top: -36px;
+        transform: translateX(-50%);
+        width: 58px;
+        height: 58px;
+        background: linear-gradient(to bottom, #ffe8a1, #d38a17 68%, #84540d);
+        clip-path: polygon(50% 0%, 100% 100%, 0 100%);
+        box-shadow: 0 0 22px rgba(255, 220, 124, 0.9);
+      }
+
+      .tower .antenna {
+        position: absolute;
+        left: 50%;
+        top: -118px;
+        transform: translateX(-50%);
+        width: 5px;
+        height: 82px;
+        background: #edf7ff;
+        box-shadow: 0 0 10px rgba(255,255,255,0.8);
+      }
+
+      .tower .antenna::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: -12px;
+        transform: translateX(-50%);
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: var(--neon);
+        box-shadow: 0 0 16px rgba(126, 247, 255, 0.9);
+      }
+
+      .tower .roof {
+        position: absolute;
+        left: 50%;
+        top: 72px;
+        transform: translateX(-50%);
+        width: 160px;
+        height: 18px;
+        background: linear-gradient(to right, #6f8fb3, #2d405d, #6f8fb3);
+        box-shadow: 0 0 18px rgba(126, 200, 255, 0.2);
+      }
+
+      .tower .sign {
+        position: absolute;
+        left: 50%;
+        top: 108px;
+        transform: translateX(-50%);
+        width: 178px;
+        height: 78px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(180deg, rgba(11, 18, 27, 0.92), rgba(7, 10, 18, 0.92));
+        border: 4px solid rgba(126,247,255,0.85);
+        box-shadow:
+          0 0 0 4px rgba(126,247,255,0.18),
+          0 0 28px rgba(126,247,255,0.5);
+        clip-path: polygon(8% 0, 92% 0, 100% 50%, 92% 100%, 8% 100%, 0 50%);
+      }
+
+      .tower .sign span {
+        font-size: clamp(16px, 1.1vw, 21px);
+        letter-spacing: 0.26em;
+        color: var(--neon);
+        text-transform: uppercase;
+        font-weight: 900;
+        text-shadow: 0 0 12px rgba(126,247,255,0.9);
+        white-space: nowrap;
+      }
+
+      .tower .windows {
+        position: absolute;
+        inset: 190px 18px 28px 18px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        z-index: 1;
+      }
+
+      .tower .windows span {
+        display: block;
+        height: 52px;
+        background: var(--window-off);
+        box-shadow: inset 0 0 0 2px rgba(0,0,0,0.18);
+        animation: towerPulse 2.2s infinite ease-in-out;
+        animation-delay: calc(var(--i) * 0.13s);
+      }
+
+      @keyframes towerPulse {
+        0%, 100% {
+          background: var(--window-off);
+          box-shadow: 0 0 0 rgba(255, 216, 107, 0), inset 0 0 0 2px rgba(0,0,0,0.18);
+        }
+        26%, 64% {
+          background: var(--window-on);
+          box-shadow: 0 0 12px rgba(255,216,107,0.85), inset 0 0 0 2px rgba(0,0,0,0.12);
+        }
+      }
+
+      .street {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 72px;
+        background: linear-gradient(to bottom, #0f141b 0%, #080c12 100%);
+        border-top: 6px solid rgba(255,255,255,0.08);
+      }
+
+      .street::before {
+        content: "";
+        position: absolute;
+        inset: 8px 0 0 0;
+        background:
+          repeating-linear-gradient(
+            90deg,
+            rgba(255, 209, 100, 0.95) 0 11px,
+            transparent 11px 38px
+          );
+        opacity: 0.72;
+      }
+
+      .street::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.52));
+      }
+
+      .scan {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 24%;
+        background: linear-gradient(to bottom, rgba(120, 213, 255, 0.18), rgba(120, 213, 255, 0.04), transparent);
+        animation: scan 8s linear infinite;
+        pointer-events: none;
+      }
+
+      @keyframes scan {
+        0% { transform: translateY(-105%); }
+        100% { transform: translateY(340%); }
+      }
+
+      @media (max-width: 760px) {
+        .city {
+          gap: 6px;
+          padding: 0 12px;
+        }
+
+        .building {
+          width: 54px;
+        }
+
+        .b5 {
+          width: 110px;
+        }
+
+        .tower-wrap {
+          width: 180px;
+          height: 480px;
+        }
+
+        .tower {
+          width: 160px;
+        }
+
+        .tower .sign {
+          width: 132px;
+          height: 56px;
+        }
+
+        .tower .sign span {
+          letter-spacing: 0.15em;
+          font-size: 12px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .stars, .cloud, .scan, .building .windows span, .tower .windows span {
+          animation: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="scene">
+      <div class="stars"></div>
+
+      <div class="clouds">
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+      </div>
+
+      <div class="scan"></div>
+
+      <div class="tower-wrap">
+        <div class="tower">
+          <div class="antenna"></div>
+          <div class="spire"></div>
+          <div class="roof"></div>
+
+          <div class="sign">
+            <span>NEW BRITT</span>
+          </div>
+
+          <div class="windows">
+            <span style="--i:1"></span>
+            <span style="--i:2"></span>
+            <span style="--i:3"></span>
+            <span style="--i:4"></span>
+            <span style="--i:5"></span>
+            <span style="--i:6"></span>
+            <span style="--i:7"></span>
+            <span style="--i:8"></span>
+            <span style="--i:9"></span>
+            <span style="--i:10"></span>
+            <span style="--i:11"></span>
+            <span style="--i:12"></span>
+            <span style="--i:13"></span>
+            <span style="--i:14"></span>
+            <span style="--i:15"></span>
+            <span style="--i:16"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="city">
+        <div class="building b1">
+          <div class="windows">
+            <span style="--d:0.2s"></span>
+            <span style="--d:0.8s"></span>
+            <span style="--d:1.3s"></span>
+            <span style="--d:0.4s"></span>
+            <span style="--d:1.1s"></span>
+            <span style="--d:1.9s"></span>
+            <span style="--d:0.9s"></span>
+            <span style="--d:1.6s"></span>
+            <span style="--d:0.3s"></span>
+          </div>
+        </div>
+
+        <div class="building b2">
+          <div class="windows">
+            <span style="--d:0.5s"></span>
+            <span style="--d:1.4s"></span>
+            <span style="--d:0.7s"></span>
+            <span style="--d:1.2s"></span>
+            <span style="--d:0.9s"></span>
+            <span style="--d:1.8s"></span>
+            <span style="--d:0.3s"></span>
+            <span style="--d:1.5s"></span>
+            <span style="--d:0.1s"></span>
+          </div>
+        </div>
+
+        <div class="building b3">
+          <div class="windows">
+            <span style="--d:0.6s"></span>
+            <span style="--d:1.1s"></span>
+            <span style="--d:0.8s"></span>
+            <span style="--d:1.7s"></span>
+            <span style="--d:0.4s"></span>
+            <span style="--d:1.3s"></span>
+            <span style="--d:0.9s"></span>
+            <span style="--d:1.2s"></span>
+            <span style="--d:1.6s"></span>
+          </div>
+        </div>
+
+        <div class="building b4">
+          <div class="windows">
+            <span style="--d:0.3s"></span>
+            <span style="--d:1.5s"></span>
+            <span style="--d:0.8s"></span>
+            <span style="--d:1.1s"></span>
+            <span style="--d:1.8s"></span>
+            <span style="--d:0.6s"></span>
+            <span style="--d:1.2s"></span>
+            <span style="--d:0.5s"></span>
+            <span style="--d:0.9s"></span>
+          </div>
+        </div>
+
+        <div class="building b5">
+          <div class="windows">
+            <span style="--d:0.1s"></span>
+            <span style="--d:0.8s"></span>
+            <span style="--d:1.6s"></span>
+            <span style="--d:0.4s"></span>
+            <span style="--d:1.1s"></span>
+            <span style="--d:1.7s"></span>
+            <span style="--d:0.7s"></span>
+            <span style="--d:1.4s"></span>
+            <span style="--d:0.3s"></span>
+          </div>
+        </div>
+
+        <div class="building b6">
+          <div class="windows">
+            <span style="--d:1.3s"></span>
+            <span style="--d:0.6s"></span>
+            <span style="--d:0.9s"></span>
+            <span style="--d:1.8s"></span>
+            <span style="--d:0.5s"></span>
+            <span style="--d:1.2s"></span>
+            <span style="--d:0.7s"></span>
+            <span style="--d:1.6s"></span>
+            <span style="--d:0.2s"></span>
+          </div>
+        </div>
+
+        <div class="building b7">
+          <div class="windows">
+            <span style="--d:0.7s"></span>
+            <span style="--d:1.5s"></span>
+            <span style="--d:0.8s"></span>
+            <span style="--d:1.2s"></span>
+            <span style="--d:0.9s"></span>
+            <span style="--d:1.4s"></span>
+            <span style="--d:0.5s"></span>
+            <span style="--d:1.1s"></span>
+            <span style="--d:0.4s"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="street"></div>
+    </div>
+  </body>
+</html>
